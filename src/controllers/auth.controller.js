@@ -23,7 +23,7 @@ const signup = async (req, res, next) => {
 }
 
 const login = async (req, res, next) => {
-  const user = await User.findOne({ username: req.body.username })
+  const user = await User.findOne({ username: req.body.username }).select('password')
 
   if (!user) {
     return res
