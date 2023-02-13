@@ -2,11 +2,18 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const port = process.env.PORT || 8000
 
 const dbConnect = require('./db')
 const authMiddleware = require('./src/middlewares/auth.middleware')
 dbConnect()
+
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+)
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
