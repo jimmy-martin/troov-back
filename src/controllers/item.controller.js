@@ -1,11 +1,12 @@
+const { StatusCodes } = require('http-status-codes')
 const Item = require('../models/item.model')
 
 const findAll = async (req, res) => {
   try {
     const items = await Item.find()
-    res.status(200).json(items)
+    res.status(StatusCodes.OK).json(items)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
 }
 
@@ -13,11 +14,11 @@ const find = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id)
     if (!item) {
-      return res.status(404).json({ message: 'Cannot find item' })
+      return res.status(StatusCodes.NOT_FOUND).json({ message: 'Cannot find item' })
     }
-    res.status(200).json(item)
+    res.status(StatusCodes.OK).json(item)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
 }
 
@@ -28,9 +29,9 @@ const create = async (req, res) => {
   })
   try {
     const newItem = await item.save()
-    res.status(201).json(newItem)
+    res.status(StatusCodes.CREATED).json(newItem)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
 }
 
@@ -41,11 +42,11 @@ const update = async (req, res) => {
     })
     console.log(item)
     if (!item) {
-      return res.status(404).json({ message: 'Cannot find item' })
+      return res.status(StatusCodes.NOT_FOUND).json({ message: 'Cannot find item' })
     }
-    res.status(200).json(item)
+    res.status(StatusCodes.OK).json(item)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
 }
 
@@ -53,11 +54,11 @@ const remove = async (req, res) => {
   try {
     const item = await Item.findByIdAndDelete(req.params.id)
     if (!item) {
-      return res.status(404).json({ message: 'Cannot find item' })
+      return res.status(StatusCodes.NOT_FOUND).json({ message: 'Cannot find item' })
     }
-    res.status(204)
+    res.status(StatusCodes.NO_CONTENT)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message })
   }
 }
 
