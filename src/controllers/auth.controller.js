@@ -13,8 +13,10 @@ const signup = async (req, res, next) => {
   })
 
   try {
-    user.save()
-    return res.status(StatusCodes.CREATED).json(user)
+    const newUser = await user.save()
+    // delete password from response
+    const { password, ...newUserResponse } = newUser._doc
+    return res.status(StatusCodes.CREATED).json(newUserResponse)
   } catch (err) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -23,7 +25,9 @@ const signup = async (req, res, next) => {
 }
 
 const login = async (req, res, next) => {
-  const user = await User.findOne({ username: req.body.username }).select('password')
+  const user = await User.findOne({ username: req.body.username }).select(
+    'password'
+  )
 
   if (!user) {
     return res
