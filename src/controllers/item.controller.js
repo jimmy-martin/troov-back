@@ -68,7 +68,7 @@ const remove = async (req, res) => {
         .status(StatusCodes.NOT_FOUND)
         .json({ message: 'Cannot find item' })
     }
-    return res.status(StatusCodes.NO_CONTENT)
+    return res.status(StatusCodes.NO_CONTENT).json()
   } catch (err) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
