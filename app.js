@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use('/items', require('./src/routes/item.routes'))
+app.use('/users', require('./src/routes/user.routes'))
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`)
